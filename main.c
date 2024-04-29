@@ -234,8 +234,116 @@ void testIsSubstringBySymbols() {
     ASSERT_BOOLEAN(true, isSubstringBySymbols("maxim", "aimx"));
     ASSERT_BOOLEAN(false, isSubstringBySymbols("maxim", "abc"));
 }
+void testFind(){
+    char testString[] = "Hello, world!";
+    char* result = find(testString, testString + sizeof(testString) - 1, 'o');
 
+    if (*result == 'o') {
+        printf("Character 'o' found at position %ld\n", result - testString);
+    } else {
+        printf("Character 'o' not found.\n");
+    }
+}
+void testFindNonSpace(){
+char testString[] = "   Hello, world!"; 
+    char* result = findNonSpace(testString);
+
+    printf("La première position non-espace dans la chaîne est : %ld\n", result - testString);
+}
+void testFindSpace(){
+char testString[] = "Hello, world!"; 
+    char* result = findSpace(testString);
+
+    if (*result == ' ') {
+        printf("Espace trouvé à la position %ld\n", result - testString);
+    } else {
+        printf("Aucun espace trouvé.\n");
+    }
+}
+void testFindNonSpaceRevers (){
+char testString[] = "Hello, world!   "; // Chaîne de caractères avec des espaces à la fin
+    char* result = findNonSpaceReverse(testString + sizeof(testString) - 2, testString);
+
+    if (*result == ' ') {
+        printf("Espace trouvé à la position %ld en partant de la fin.\n", testString + sizeof(testString) - 1 - result);
+    } else {
+        printf("Aucun espace trouvé.\n");
+    }
+}
+void testFindSpaceReverse(){
+char testString[] = "Hello, world!   "; // Chaîne de caractères avec des espaces à la fin
+    char* result = findSpaceReverse(testString + sizeof(testString) - 2, testString);
+
+    if (*result == ' ') {
+        printf("Espace trouvé à la position %ld en partant de la fin.\n", testString + sizeof(testString) - 1 - result);
+    } else {
+        printf("Aucun espace trouvé.\n");
+    }
+}
+void testCampareStrings(){
+char string1[] = "apple";
+    char string2[] = "banana";
+
+    int result = compareStrings(string1, string2);
+
+    if (result < 0) {
+        printf("'%s' comes before '%s'\n", string1, string2);
+    } else if (result > 0) {
+        printf("'%s' comes after '%s'\n", string1, string2);
+    } else {
+        printf("'%s' and '%s' are equal\n", string1, string2);
+    }
+}
+void testCopy(){
+const char* source = "Hello, world!";
+    char destination[20]; // Tableau de destination pour stocker la copie
+
+    char* result = copy(source + 7, source + 12, destination); // Copie "world" dans destination
+
+    printf("Copie : %s\n", destination);
+}
+void testCopyIf(){
+const char* source = "Hello, world! 123";
+    char destination[20]; // Tableau de destination pour stocker la copie
+
+    char* result = copyIf(source, source + strlen(source), destination, isAlphabetic); // Copie uniquement les caractères alphabétiques
+
+    printf("Copie : %s\n", destination);
+}
+void testCopyIfReverse(){
+const char* source = "Hello, world! 123";
+    char destination[20]; // Tableau de destination pour stocker la copie
+
+    char* result = copyIfReverse(source + strlen(source) - 1, source - 1, destination, isAlphabetic); // Copie uniquement les caractères alphabétiques en sens inverse
+
+    printf("Copie inversée : %s\n", destination);
+}
+void testReverse(){
+const char* originalString = "Hello, world!";
+    char* reversedString = reverse(originalString, originalString + strlen(originalString));
+
+    printf("Chaîne originale : %s\n", originalString);
+    printf("Chaîne inversée : %s\n", reversedString);
+
+    free(reversedString); // Libération de la mémoire allouée dynamiquement
+}
+void testGetLength(){
+const char* testString = "Hello, world!";
+    size_t length = getLength(testString);
+    printf("Length of \"%s\": %zu\n", testString, length);
+}
 int main() {
+    testGetLength();
+    testFind();
+    testFindSpace();
+    testFindNonSpace();
+    testFindNonSpaceReverse();
+    testFindSpaceReverse();
+    testCampareStrings();
+    testCopy();
+    testCopyIf();
+    testCopyIfReverse();
+    testReverse();
     printTest("removeExtraSpaces", testRemoveExtraSpaces);
     printTest("legacyReverseWords", testLettersToStartDigitsToEnd);
     printTest("replaceDigitsBySpaces", testReplaceDigitsBySpaces);
